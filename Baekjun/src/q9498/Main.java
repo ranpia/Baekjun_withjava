@@ -28,7 +28,7 @@ public class Main {
 				break;
 		}
 		
-		/*if (n >= 90) {
+		/*if (n<=100 && n >= 90) {
 			System.out.println("A");
 		} 
 		else if (n >= 80) {
@@ -40,8 +40,11 @@ public class Main {
 		else if (n >= 60) {
 			System.out.println("D");
 		}
-		else {
+		else if (n>=0 && n<60){
 			System.out.println("F");
+		}
+		else {
+			System.out.println("Out of range!");
 		}*/
 		
 		
