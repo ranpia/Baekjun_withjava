@@ -19,8 +19,8 @@ public class Main {
         array[x][y] = value;
 
         while (value < num * num) {
-            for (int i = 0; i < 2; i++) {  // 두 번 방향을 바꾸며 진행
-                for (int j = 0; j < steps; j++) {  // 단계 수만큼 이동
+            for (int i = 0; i < 2; i++) {  
+                for (int j = 0; j < steps; j++) { 
                     if (value == num * num) break;
 
                     value++;
