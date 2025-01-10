@@ -30,9 +30,8 @@ public class Main {
 				System.out.println(mystack.top());
 				break;
 			}
-			sc.close();
 		}
-
+		sc.close();
 	}
 
 }
