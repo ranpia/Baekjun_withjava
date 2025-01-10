@@ -1,5 +1,4 @@
 package q10828ver3;
-
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -9,7 +8,7 @@ public class Main {
 		Stack<Integer> stack = new Stack<Integer>();
 		Scanner sc = new Scanner(System.in);
 		int line = sc.nextInt();
-		System.out.println();
+
 		for (int i = 0; i < line; i++) {
 			String order = sc.next();
 			int insert = 0;
