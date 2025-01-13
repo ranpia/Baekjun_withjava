@@ -7,28 +7,25 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Stack<String> stack = new Stack<String>();
 		int line = sc.nextInt();
 		sc.nextLine();
 		for (int i = 0; i < line; i++) {
+			Stack<String> stack = new Stack<String>();
 			String VPS = sc.nextLine();
-			int left = 0;
-			int right = 0;
-			boolean ps = true;
+			boolean truth = true;
 			for (int j = 0; j < VPS.length(); j++) {
-				if (VPS.charAt(j) == '(') {
-					left++;
-				} else if (VPS.charAt(j) == ')') {
-					right++;
-				}
-
-				if (left < right) {
-					ps = false;
+				if (VPS.charAt(j) == '(')
+					stack.add(VPS.substring(j, j + 1));
+				else {
+					if (stack.size() > 0)
+						stack.pop();
+					else
+						truth = false;
 				}
 			}
-			if (ps && left == right) {
+			if (stack.size() == 0 && truth)
 				System.out.println("YES");
-			} else
+			else
 				System.out.println("NO");
 
 		}
