@@ -29,6 +29,8 @@ public class Main {
 				System.out.println("YES");
 			}else 
 				System.out.println("NO");
+			
+			sc.close();
 		}
 	}
 
