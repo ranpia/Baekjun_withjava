@@ -1,61 +1,57 @@
 package q2293;
 
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int coinnum = sc.nextInt();
-        int goal = sc.nextInt();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int coinnum = sc.nextInt();
+		int goal = sc.nextInt();
 
-        int[] coins = new int[coinnum];
-        for (int i = 0; i < coinnum; i++) {
-            coins[i] = sc.nextInt();
-        }
-        sc.close();
+		int[] coins = new int[coinnum];
+		for (int i = 0; i < coinnum; i++) {
+			coins[i] = sc.nextInt();
+		}
+		sc.close();
 
-        CoinCase c = new CoinCase(coins);
-        c.coincount(new int[coinnum], goal);
-        System.out.println(c.casesCount);
-    }
+		CoinCase c = new CoinCase(coins, goal);
+		c.coincount();
+		System.out.println(c.casesCount);
+	}
 }
 
 class CoinCase {
-    public int casesCount;
-    public ArrayList<int[]> coinCases;
-    public int[] coins;
+	public int casesCount;
+	public int[] coins;
+	public int[] dp;
+	public int goal;
 
-    public CoinCase(int[] coins) {
-        this.coins = coins;
-        this.coinCases = new ArrayList<>();
-        this.casesCount = 0;
-    }
+	public CoinCase(int[] coins, int goal) {
+		this.coins = coins;
+		this.casesCount = 0;
+		this.dp = new int[goal + 1];
+		this.goal = goal;
+	}
 
-    public void coincount(int[] usedcoins, int goal) {
-        int cur_mount = 0;
-        for (int i = 0; i < coins.length; i++) {
-            cur_mount += this.coins[i] * usedcoins[i];
-        }
+	public void coincount() {
+		dp[0] = 0;
+		for (int j = 0; j < coins.length; j++) {
+			dp[coins[j]] += 1;
+		}
 
-        if (cur_mount > goal) {
-            return;
-        } else if (cur_mount == goal) {
-            for (int[] caseArr : this.coinCases) {
-                if (Arrays.equals(caseArr, usedcoins)) {
-                    return; // 중복이면 바로 종료
-                }
-            }
-            this.coinCases.add(Arrays.copyOf(usedcoins, usedcoins.length));
-            this.casesCount++;
-            return;
-        } else {
-            for (int i = 0; i < coins.length; i++) {
-                usedcoins[i]++;
-                coincount(usedcoins, goal);
-                usedcoins[i]--; // 백트래킹 추가
-            }
-        }
-    }
+		// 중복 제거 로직 추가하기
+		for (int coin : coins) { 
+			for (int i = coin; i < dp.length; i++) {
+				if (dp[i] != 0) {
+					if (goal >= coin + i) {
+						dp[coin + i] += dp[i-coin];
+						System.out.print("dp[" + (i) + "] : " + dp[i]);
+						System.out.println("+ dp[" + (coin) + "] : " + dp[coin]);
+						System.out.println("= dp[" + (coin + i) + "] : " + dp[coin + i]);
+					}
+				}
+			}
+		}
+		casesCount = dp[goal];
+	}
 }
