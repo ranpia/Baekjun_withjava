@@ -34,22 +34,16 @@ class CoinCase {
 	}
 
 	public void coincount() {
-		dp[0] = 0;
-		for (int j = 0; j < coins.length; j++) {
-			dp[coins[j]] += 1;
-		}
+		// 초기값 세팅
+		dp[0] = 1;
 
 		// 중복 제거 로직 추가하기
-		for (int coin : coins) { 
+		for (int coin : coins) {
 			for (int i = coin; i < dp.length; i++) {
-				if (dp[i] != 0) {
-					if (goal >= coin + i) {
-						dp[coin + i] += dp[i-coin];
-						System.out.print("dp[" + (i) + "] : " + dp[i]);
-						System.out.println("+ dp[" + (coin) + "] : " + dp[coin]);
-						System.out.println("= dp[" + (coin + i) + "] : " + dp[coin + i]);
-					}
-				}
+				dp[i] += dp[i - coin];
+				System.out.print("dp[" + (i) + "] : " + dp[i]);
+				System.out.println("+ dp[" + (coin) + "] : " + dp[coin]);
+
 			}
 		}
 		casesCount = dp[goal];
