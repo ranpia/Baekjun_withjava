@@ -8,21 +8,17 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 
 		int n = sc.nextInt();
+		sc.close();
 
-		for (int i = 1; i < n + 1; i++) {
-			System.out.print("*".repeat(i));
-			System.out.print(" ".repeat(2 * n - 2 * i));
-			System.out.print("*".repeat(i));
-			System.out.println();
+		for (int i = 1; i <= n; i++) {
+			String line = String.format("%s%s%s", "*".repeat(i), " ".repeat(2 * (n - i)), "*".repeat(i));
+			System.out.println(line);
 		}
 
-		for (int i = n - 1; i > 0; i--) {
-			System.out.print("*".repeat(i));
-			System.out.print(" ".repeat(2 * n - 2 * i));
-			System.out.print("*".repeat(i));
-			System.out.println();
+		for (int i = n - 1; i >= 1; i--) {
+			String line = String.format("%s%s%s", "*".repeat(i), " ".repeat(2 * (n - i)), "*".repeat(i));
+			System.out.println(line);
 		}
-
 	}
 
 }
