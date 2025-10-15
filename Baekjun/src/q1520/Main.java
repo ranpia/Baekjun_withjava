@@ -1,10 +1,7 @@
 package q1520;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException{
@@ -25,7 +22,7 @@ public class Main {
         }
 
         Pathfinder pf = new Pathfinder(map);
-        bw.write(Integer.toString(pf.findpath()));
+        bw.write(Integer.toString(pf.dfs(0,0)));
 
         bw.flush();
         bw.close();
@@ -35,50 +32,32 @@ public class Main {
 
 class Pathfinder {
     static int[][] map;
+    int[][] dir = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    int[][] dp;
 
     Pathfinder(int[][] map) {
         this.map = map;
+        this.dp = new int[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) Arrays.fill(dp[i], -1);
+        dp[map.length-1][map[0].length-1] = 1;
     }
 
-    public int findpath(){
+    public int dfs(int nx, int ny) {
+        if (dp[nx][ny] > -1){
+            return dp[nx][ny];
+        }
+
         int pathcounts = 0 ;
-
-        boolean [][] visit = new boolean [map.length][map[0].length];
-        for (int i = 0; i < map.length; i++) {
-            Arrays.fill(visit[i], false);
-        }
-        Queue<int []> q = new LinkedList<>();
-        q.add(new int[]{0,0});
-        while (!q.isEmpty()){
-            int[] tmp = q.poll();
-            int x = tmp[0];
-            int y = tmp[1];
-
-            if (x == map.length-1 && y == map[0].length-1){
-                pathcounts++;
-            }
-            if (x>0){
-                if (!visit[x - 1][y] && map[x][y] > map[x - 1][y] ){
-                    q.add(new int[]{x - 1,y});
-                }
-            }
-            if (y>0){
-                if (!visit[x][y - 1] && map[x][y] > map[x][y-1] ){
-                    q.add(new int[]{x,y - 1});
-                }
-            }
-            if (y<map[0].length-1){
-                if (!visit[x][y + 1] && map[x][y] > map[x][y+1] ){
-                    q.add(new int[]{x,y + 1});
-                }
-            }
-            if (x<map.length-1){
-                if (!visit[x + 1][y] && map[x][y] > map[x+1][y] ){
-                    q.add(new int[]{x + 1,y});
+        for (int i = 0; i<dir.length; i++){
+            int x =nx + dir[i][0];
+            int y =ny + dir[i][1];
+            if (x >= 0 && y >= 0 && y<map[0].length && x<map.length){
+                if (map[nx][ny] > map[x][y] ){
+                    pathcounts += dfs(x,y);
                 }
             }
         }
-
+        dp[nx][ny] = pathcounts;
         return pathcounts;
     }
 }
